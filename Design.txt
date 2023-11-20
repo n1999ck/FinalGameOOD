@@ -1,0 +1,39 @@
+Game Design
+
+Basic concept: Try to implement an Ace Attorney-style visual novel/court based game
+
+Required elements:
+    - Characters
+    - Locations (Investigation)
+        - Move to
+        - Points of interest
+        - Items, information in points of interest
+    - Logic/arguments/whatever
+    
+    - Investigation section commands:
+        - Present
+        - Talk
+        - Investigate
+        - Move
+        - Items
+        - Profiles
+        
+    - Trial section commands:
+        - Profiles
+        - Items
+        - Penalty System 
+        - Cross Examination
+            - Back/Forward
+            - Press
+            - Present
+    
+    - Characters
+        - Can move
+        - Can talk
+        - Can be presented with evidence
+    
+    - Items with detailed descriptions
+    - Save function
+    
+    
+    

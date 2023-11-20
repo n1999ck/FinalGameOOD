@@ -1,0 +1,27 @@
+# Tasks
+- Complete room map
+- Place rooms
+- Ensure that rooms can hold many items
+- Ensure that not all items can be picked up
+- Inventory for items
+- Win/lose condition 
+- Define win requirements
+- Define lose requirements
+- Create variable/checker
+- Implement back command
+- Make game track 'go' history
+- Add at least 7 new commands
+  - Multi-word parsing
+  - Locked doors
+  - Keys
+  - Save game
+  - Load game
+  - Characters
+  - Character interaction with player
+- Game concept document - 1 page
+- Name characters
+- Finish plot
+- Write storylines
+- Court/trial system??
+- Or play as detective lol
+- "Cutscene" mechanic
