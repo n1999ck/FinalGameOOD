@@ -11,7 +11,6 @@ namespace StarterGame
         {
             //Creates new instance of game
             //Calls its startup, actual loop, and ending
-            
             Game game = new Game();
             game.Start();
             game.Play();

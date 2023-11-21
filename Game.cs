@@ -142,7 +142,7 @@ namespace StarterGame
 
         public string Welcome()
         {
-            return "Welcome to the World of CSU!\n\n The World of CSU is a new, incredibly boring adventure game.\n\nType 'help' if you need help." + _player.CurrentRoom.Description();
+            return "Welcome to the World of CSU!\n\n The World of CSU is a new, incredibly boring adventure game.\n\nType 'help' if you need help." + _player.CurrentRoom.ToString();
         }
 
         public string Goodbye()

@@ -31,9 +31,8 @@ namespace StarterGame
             _entrance = CreateWorld();
             NotificationCenter.Instance.AddObserver("PlayerWillEnterRoom", PlayerWillEnterRoom);
             NotificationCenter.Instance.AddObserver("PlayerDidEnterRoom", PlayerDidEnterRoom);
-
-            
         }
+
         public void PlayerWillEnterRoom(Notification notification)
         {
             Player player = (Player)notification.Object;
@@ -64,32 +63,26 @@ namespace StarterGame
 
         private Room CreateWorld()
         {
-            Room outside = new Room("outside the main entrance of the university");
-            Room scctparking = new Room("in the parking lot at SCCT");
-            Room boulevard = new Room("on the boulevard");
-            Room universityParking = new Room("in the parking lot at University Hall");
-            Room parkingDeck = new Room("in the parking deck");
-            Room scct = new Room("in the SCCT building");
-            Room theGreen = new Room("in the green in from of Schuster Center");
-            Room universityHall = new Room("in University Hall");
-            Room schuster = new Room("in the Schuster Center");
-            Room davidson = new Room("in the Davidson lounge");
-            Room clockTower = new Room("at the Clock Tower");
-            Room greekCenter = new Room("in the Greek Center");
+            Room parkingLot = new Room("in the ACE Embalming parking lot");
+            Room lobby = new Room("in the ACE Embalming lobby");
+            Room deliveryBay = new Room("in the delivery bay");
+            Room frontEmbalmingRoom = new Room("in the front embalming room");
+            Room backEmbalmingRoom = new Room("in the back embalming room");
+            Room refrigerator = new Room("in the walk-in refrigerator");
+            Room breakRoom = new Room("in the break room");
+            Room office = new Room("in the office");
+            Room lockerRoom = new Room("in the locker room");
 
-            //definitely not all connected correctly
-            Door door = Door.Connect(outside, boulevard, "west", "east");
-            door = Door.Connect(theGreen, boulevard, "east", "west");
-            door = Door.Connect(scct, scctparking, "east", "west");
-            door = Door.Connect(scctparking, boulevard, "north", "south");
-            door = Door.Connect(scct, schuster, "north", "south");
-            door = Door.Connect(schuster,theGreen, "east", "west");
-            door = Door.Connect(universityHall,universityParking, "east", "west");
-            door = Door.Connect(universityParking, parkingDeck, "north", "south");
-            door = Door.Connect(davidson, clockTower, "west", "east");
-            door = Door.Connect(clockTower, greekCenter, "north", "south");
-            door = Door.Connect(schuster, universityHall, "north", "south");
-            door = Door.Connect(universityParking, boulevard, "north", "south");
+            Door door = Door.Connect(parkingLot, lobby, "north", "south");
+            door = Door.Connect(parkingLot, deliveryBay, "west", "east");
+            door = Door.Connect(deliveryBay, frontEmbalmingRoom, "north", "south");
+            door = Door.Connect(frontEmbalmingRoom, backEmbalmingRoom, "north", "south");
+            door = Door.Connect(backEmbalmingRoom, lockerRoom, "east", "west");
+            door = Door.Connect(backEmbalmingRoom, refrigerator, "north", "south");
+            door = Door.Connect(lockerRoom, breakRoom, "east", "west");
+            door = Door.Connect(lockerRoom, lobby, "south", "north");
+            door = Door.Connect(lobby, office, "east", "west");
+
 
             /*
             RegularLock rl = new RegularLock();
@@ -97,32 +90,28 @@ namespace StarterGame
             Keyed keyed = new Keyed("Key1");
             rl.Keyed = keyed;
             */
-            ILockable rl = LockableFacade.MakeLockable("RegularLock", "key1"); //Making as ILockable instead of RegularLock- minimizes potential for error
+            //Locking the office
+            ILockable rl = LockableFacade.MakeLockable("RegularLock", "officeKey"); //Making as ILockable instead of RegularLock- minimizes potential for error
             door.Lockable = rl;
             door.Close();
             rl.Lock();
             IItem key = rl.Remove();
-            clockTower.Drop(key);
+            lockerRoom.Drop(key);
 
-            //keeping track of where player goes
-
-
-            WorldChange wc = new WorldChange(universityHall, schuster, davidson, "west", "east");
-            _worldChanges[universityHall] = wc;
             
-            _exit = parkingDeck;
+            _exit = parkingLot;
             
             TrapRoom tr = new TrapRoom("shazam");
-            scct.RoomDelegate = tr;
-            parkingDeck.RoomDelegate = tr;
+            backEmbalmingRoom.RoomDelegate = tr;
+            refrigerator.RoomDelegate = tr;
 
             //Create items, place them
             IItem item = new Item("IPad", 0.5f);
             IItem decorator = new Item("cover", 0.2f);
             item.AddDecorator(decorator);
-            schuster.Drop(item);
+            lobby.Drop(item);
 
-            return outside;
+            return parkingLot;
         }
     }
 

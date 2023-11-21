@@ -20,7 +20,7 @@ namespace StarterGame
         }
 
         //Only thing Character can do besides messages
-        public void WaltTo(string direction)
+        public void WalkTo(string direction)
         {
             Door nextDoor = this.CurrentRoom.GetExit(direction);
             if (nextDoor.IsOpen)
@@ -32,7 +32,7 @@ namespace StarterGame
                 CurrentRoom = nextDoor.RoomOnTheOtherSide(CurrentRoom);
                 notification = new Notification("CharacterDidEnterRoom", this);
                 NotificationCenter.Instance.PostNotification(notification);
-                NormalMessage("\n" + this.CurrentRoom.Description());
+                NormalMessage("\n" + this.CurrentRoom.ToString());
             }
             else
             {

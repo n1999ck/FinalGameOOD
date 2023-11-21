@@ -13,8 +13,13 @@ namespace StarterGame
     public class Room : ITrigger
     {
         private Dictionary<string, Door> _exits;
+        
+        //Things for investigation
+        private Dictionary<string, PointOfInterest> _pointsOfInterest;
         private string _tag;
         public string Tag { get { return _tag; } set { _tag = value; } }
+        private string _description;
+        public string Description { get {return _description; } set { _description = value; } }
 
         private IItem _item;
 
@@ -88,7 +93,8 @@ namespace StarterGame
             return exitNames;
         }
 
-        public string Description()
+        override
+        public string ToString()
         {
             string desc = "You are " + this.Tag + ".\n *** " + this.GetExits() +  "\nItem: " + (_item == null ? "None" : _item.Name);
             return _roomDelegate == null ? desc :
@@ -112,6 +118,11 @@ namespace StarterGame
                 }
             }
             return itemToReturn;
+        }
+
+        public void SetPointofInterest(string name, PointOfInterest pointOfInterest)
+        {
+            _pointsOfInterest[name] = pointOfInterest;
         }
     }
 
@@ -144,7 +155,7 @@ namespace StarterGame
                     {
                         _disarmed = true;
                         player.InfoMessage("You have disarmed the trap.");
-                        player.InfoMessage(player.CurrentRoom.Description());
+                        player.InfoMessage(player.CurrentRoom.ToString());
                     }
                     else
                     {

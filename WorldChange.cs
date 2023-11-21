@@ -11,6 +11,10 @@ namespace StarterGame
 
         // interface driven design / protocol driven design
         // you create interfaces , everything works from them
+        //keeping track of where player goes
+           /*  WorldChange wc = new WorldChange(universityHall, schuster, davidson, "west", "east");
+            _worldChanges[universityHall] = wc;
+             */
         public WorldChange (ITrigger trigger, Room inWorldRoom, Room outWorldRoom, string inOutDirection, string outInDirection){
             _trigger = trigger;
             _inWorldRoom = inWorldRoom;

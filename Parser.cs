@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System;
-
-namespace StarterGame
+﻿namespace StarterGame
 {
     /*
      * Spring 2023
@@ -35,6 +31,11 @@ namespace StarterGame
                     if (words.Length > 1)
                     {
                         command.SecondWord = words[1];
+                        if (command.HasThirdWord())
+                        {
+                            command.ThirdWord = words[2];
+                        }
+                        
                     }
                     else
                     {

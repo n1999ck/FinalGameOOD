@@ -22,6 +22,5 @@
 - Name characters
 - Finish plot
 - Write storylines
-- Court/trial system??
 - Or play as detective lol
 - "Cutscene" mechanic

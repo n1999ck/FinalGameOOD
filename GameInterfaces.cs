@@ -62,6 +62,12 @@ namespace StarterGame
         void AddDecorator(IItem decorator);
     }
 
+    public interface IPointOfInterest
+    {
+        string Name {get;}
+        string Description {get;}
+    }
+
     public interface IItemContainer : IItem
     {
         void Add(IItem item);

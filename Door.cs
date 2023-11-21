@@ -96,7 +96,7 @@ namespace StarterGame
             return Lockable == null ? null : Lockable.Remove();
         }
 
-        public static Door Connect(Room roomA, Room roomB, string labelToRoomB, string labelToRoomA)
+        public static Door Connect(Room roomA, Room roomB, string labelToRoomA, string labelToRoomB)
         {
             Door door = new Door(roomA, roomB);
             roomA.SetExit(labelToRoomA, door);

@@ -7,10 +7,12 @@ namespace StarterGame
         private string _name;
         private float _weight;
         private IItem _decorator;
+        private string _longDescription;
 
         public string Name {get{return _name;}}
         public float Weight {get{return _weight +  (_decorator == null ? 0 : _decorator.Weight);}}
         public string Description {get {return LongName + ", " + Weight;}}
+        public string LongDescription {get {return LongDescription;} set {_longDescription = value;}}
         public bool IsContainer {get{return false;}}
         public string LongName {
             get

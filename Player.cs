@@ -20,7 +20,7 @@ namespace StarterGame
         }
 
         //Only thing player can do besides messages
-        public void WaltTo(string direction)
+        public void WalkTo(string direction)
         {
             Door nextDoor = this.CurrentRoom.GetExit(direction);
             if (nextDoor.IsOpen)
@@ -32,7 +32,7 @@ namespace StarterGame
                 CurrentRoom = nextDoor.RoomOnTheOtherSide(CurrentRoom);
                 notification = new Notification("PlayerDidEnterRoom", this);
                 NotificationCenter.Instance.PostNotification(notification);
-                NormalMessage("\n" + this.CurrentRoom.Description());
+                NormalMessage("\n" + this.CurrentRoom.ToString());
             }
             else
             {
@@ -102,6 +102,11 @@ namespace StarterGame
             Notification notification = new Notification
                 ("PlayerDidShoutAWord", this, userInfo); //designated constructor: can add userInfo to carry the info
             NotificationCenter.Instance.PostNotification(notification);
+        }
+
+        public void Investigate(string pointOfInterestName)
+        {
+            
         }
 
         public void Inspect(string itemName){
