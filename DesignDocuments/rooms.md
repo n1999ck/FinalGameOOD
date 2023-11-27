@@ -72,9 +72,11 @@ Locker Room -
                             - Black Lipstick: A tube of black lipstick. It's almost completely used up.
                             - Pocketknife: A small pocketknife - black, of course. It's been sharpened recently.
                             - Book: A pocket-sized book of poetry by Edgar Allen Poe. It's well-worn. Many of its pages are annotated.
-                    - Sophie's Outfit:
-                        - 
-            - Angel's Locker: Angel's locker is decorated with faux flowers.
+                    - Sophie's jacket: The jacket Sophie wore before coming to the office: black leather, decorated with all manner of studs and spikes.
+            - Angel's Locker: Angel's locker is decorated with faux flowers. It's a bit cluttered with clothes and papers.
+                - Items:
+                    - Angel's outfit: Angel's street clothes, worn before changing into PPE for the pickup. A tan cardigan, white blouse, and blue jeans.
+                    - Papers:
     Exits:
     Items:
 

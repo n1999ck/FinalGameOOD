@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using System;
-using System.Runtime.CompilerServices;
 
 namespace StarterGame
 {
@@ -11,7 +8,6 @@ namespace StarterGame
     public class Character
     {
         private Room _currentRoom = null;
-        private IItem _hand = null;
         public Room CurrentRoom { get { return _currentRoom; } set { _currentRoom = value; } }
 
         public Character(Room room)
@@ -32,11 +28,11 @@ namespace StarterGame
                 CurrentRoom = nextDoor.RoomOnTheOtherSide(CurrentRoom);
                 notification = new Notification("CharacterDidEnterRoom", this);
                 NotificationCenter.Instance.PostNotification(notification);
-                NormalMessage("\n" + this.CurrentRoom.ToString());
+                //NormalMessage("\n" + this.CurrentRoom.ToString());
             }
             else
             {
-                ErrorMessage("\nThe door in " + direction + " is not open.");
+                //ErrorMessage("\nThe door in " + direction + " is not open.");
             }
         }
 
@@ -46,35 +42,15 @@ namespace StarterGame
         {
             Console.WriteLine(message);
         }
-
         
-        public void ColoredMessage(string message, ConsoleColor newColor)
+
+        public string getShown(IItem item)
         {
-            ConsoleColor oldColor = Console.ForegroundColor;
-            Console.ForegroundColor = newColor;
-            OutputMessage(message);
-            Console.ForegroundColor = oldColor;
+            //Item should have dictionary of character names and their responses to the item
+            //otherwise, use a default string
+
         }
 
-        public void NormalMessage(string message)
-        {
-            ColoredMessage(message, ConsoleColor.White);
-        }
-
-        public void InfoMessage(string message)
-        {
-            ColoredMessage(message, ConsoleColor.Cyan);
-        }
-
-        public void WarningMessage(string message)
-        {
-            ColoredMessage(message, ConsoleColor.DarkYellow);
-        }
-
-        public void ErrorMessage(string message)
-        {
-            ColoredMessage(message, ConsoleColor.Red);
-        }
 
         
     }

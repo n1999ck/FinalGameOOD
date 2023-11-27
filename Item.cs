@@ -12,12 +12,12 @@ namespace StarterGame
         public string Name {get{return _name;}}
         public float Weight {get{return _weight +  (_decorator == null ? 0 : _decorator.Weight);}}
         public string Description {get {return LongName + ", " + Weight;}}
-        public string LongDescription {get {return LongDescription;} set {_longDescription = value;}}
+        //public string LongDescription {get {return LongDescription;} set {_longDescription = value;}}
         public bool IsContainer {get{return false;}}
         public string LongName {
             get
             {
-                return Name + ( _decorator ==null ? "" : "with " + _decorator.LongName);
+                return Name + ( _decorator ==null ? "" : " with " + _decorator.LongName);
             }
         }
         public Item() : this("Nameless", 0){}
@@ -30,6 +30,7 @@ namespace StarterGame
             _weight = Weight;
             _decorator = null;
         }
+
         //Decorator design pattern: Making variations of objects without changing the original
         public void AddDecorator(IItem decorator)
         {
@@ -51,6 +52,7 @@ namespace StarterGame
         private string _name;
         private float _weight;
         private IItem _decorator;
+        private bool _isHandheld;
         private Dictionary<string, IItem> _items;
         public string Name {get{return _name;}}
         public float Weight
@@ -67,15 +69,48 @@ namespace StarterGame
             }
         }
         
-        public string Description {get {return LongName + ", " + Weight;}}
-        public bool IsContainer {get{return false;}}
-        public string LongName {
-            get
+        public string Description 
+        {
+            get 
             {
-                return Name + ( _decorator ==null ? "" : "with " + _decorator.LongName);
+                string returnString = "";
+                if (_items.Count == 0)
+                {
+                    returnString = "None";
+                }
+                else
+                {
+                    foreach (IItem item in _items.Values)
+                    {
+                        returnString += item.Description + "\n";
+                    }
+                }
+                
+                return returnString;
             }
         }
 
+        public bool IsContainer {get{return true;}}
+        public bool IsHandheld {get{return _isHandheld;}}
+        public string LongName {
+            get
+            {
+                return Name + ( _decorator ==null ? "" : " with " + _decorator.LongName);
+            }
+        }
+
+        public IItem GetItem(string itemName) {
+            IItem itemToReturn = null;
+            if (_items.Count != 0)
+            {
+                _items.TryGetValue(itemName, out itemToReturn);
+                if (itemToReturn != null)
+                {
+                    _items.Remove(itemName);
+                }   
+            }
+            return itemToReturn;
+        }
         public ItemContainer() : this("Nameless", 0){}
         public ItemContainer(string Name) : this(Name, 1f){}
 

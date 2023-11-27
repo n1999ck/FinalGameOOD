@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System;
+using System.Drawing;
 
 namespace StarterGame
 {
@@ -14,14 +15,14 @@ namespace StarterGame
     {
         private Dictionary<string, Door> _exits;
         
-        //Things for investigation
+        //Things to investigate
         private Dictionary<string, PointOfInterest> _pointsOfInterest;
         private string _tag;
         public string Tag { get { return _tag; } set { _tag = value; } }
         private string _description;
         public string Description { get {return _description; } set { _description = value; } }
 
-        private IItem _item;
+        private ItemContainer _items;
 
         private IRoomDelegate _roomDelegate;
         public IRoomDelegate RoomDelegate 
@@ -56,7 +57,8 @@ namespace StarterGame
             _exits = new Dictionary<string, Door>();
             this.Tag = tag;
             this._roomDelegate = null; // if you want a delegate you must set
-            this._item = null;
+            this._items = new ItemContainer();
+            this._pointsOfInterest = new Dictionary<string, PointOfInterest>();
         }
 
         public void SetExit(string exitName, Door door)
@@ -96,33 +98,30 @@ namespace StarterGame
         override
         public string ToString()
         {
-            string desc = "You are " + this.Tag + ".\n *** " + this.GetExits() +  "\nItem: " + (_item == null ? "None" : _item.Name);
+            string desc = "You are " + this.Tag + ".\n *** " + this.GetExits() +  "\nItems: " + _items.Description;
             return _roomDelegate == null ? desc :
                 _roomDelegate.RoomDidGetDescription(desc);
         }
 
         public void Drop(IItem item)
         {
-            _item = item;
+            _items.Add(item);
         }
         
         public IItem Pickup(String itemName)
         {
-            IItem itemToReturn = null;
-            if (_item != null)
-            {
-                if (_item.Name.Equals(itemName))
-                {
-                    itemToReturn = _item;
-                    _item = null;   
-                }
-            }
-            return itemToReturn;
+            return _items.GetItem(itemName);
         }
 
-        public void SetPointofInterest(string name, PointOfInterest pointOfInterest)
+        public void AddPointofInterest(string name, PointOfInterest pointOfInterest)
         {
             _pointsOfInterest[name] = pointOfInterest;
+        }
+
+        public PointOfInterest GetPointOfInterest(string name){
+            PointOfInterest PoIToReturn = null;
+            _pointsOfInterest.TryGetValue(name, out PoIToReturn);           
+            return PoIToReturn;
         }
     }
 

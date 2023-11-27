@@ -106,6 +106,15 @@ namespace StarterGame
 
         public void Investigate(string pointOfInterestName)
         {
+            Notification notification = new Notification("PlayerWillInvestigate", this);
+            NotificationCenter.Instance.PostNotification(notification);
+            PointOfInterest pointOfInterest = CurrentRoom.GetPointOfInterest(pointOfInterestName);
+            if (pointOfInterest != null)
+            {
+                InfoMessage("You take a closer look at " + pointOfInterestName + ".\nIt seems to be " + pointOfInterest.Description);
+                InfoMessage("Items:\n" + pointOfInterest.ItemsList);
+                pointOfInterest.Investigated = true;
+            }
             
         }
 

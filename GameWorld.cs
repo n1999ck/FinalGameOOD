@@ -76,12 +76,12 @@ namespace StarterGame
             Door door = Door.Connect(parkingLot, lobby, "north", "south");
             door = Door.Connect(parkingLot, deliveryBay, "west", "east");
             door = Door.Connect(deliveryBay, frontEmbalmingRoom, "north", "south");
+            door = Door.Connect(deliveryBay, refrigerator, "west", "east");
             door = Door.Connect(frontEmbalmingRoom, backEmbalmingRoom, "north", "south");
             door = Door.Connect(backEmbalmingRoom, lockerRoom, "east", "west");
-            door = Door.Connect(backEmbalmingRoom, refrigerator, "north", "south");
-            door = Door.Connect(lockerRoom, breakRoom, "east", "west");
             door = Door.Connect(lockerRoom, lobby, "south", "north");
-            door = Door.Connect(lobby, office, "east", "west");
+            door = Door.Connect(breakRoom, lobby, "west", "east");
+            door = Door.Connect(breakRoom, office, "north","south");
 
 
             /*
@@ -97,7 +97,6 @@ namespace StarterGame
             rl.Lock();
             IItem key = rl.Remove();
             lockerRoom.Drop(key);
-
             
             _exit = parkingLot;
             
@@ -109,8 +108,15 @@ namespace StarterGame
             IItem item = new Item("IPad", 0.5f);
             IItem decorator = new Item("cover", 0.2f);
             item.AddDecorator(decorator);
-            lobby.Drop(item);
+            parkingLot.Drop(item);
+            item = new Item("Notebook", 0.2f);
+            parkingLot.Drop(item);
+            item = new Item("Embalming fluid", 1.3f);
+            parkingLot.Drop(item);
 
+            PointOfInterest anthonysCar = new PointOfInterest("AnthonysCar", "A white 1985 Oldsmobile Cutlass Ciera. He's been driving it since it was new. It looks well-maintained, inside and out.");
+            parkingLot.AddPointofInterest("AnthonysCar", anthonysCar);
+            item = new Item("Wallet", 0.1f);
             return parkingLot;
         }
     }
