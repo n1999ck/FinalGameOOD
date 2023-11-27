@@ -11,6 +11,7 @@ namespace StarterGame
         private string _description;
         
         public string Description { get {return _description; }}
+        private ItemContainer _items;
 
         public string ItemsList {get {return _items.Description;}}
 
@@ -22,8 +23,6 @@ namespace StarterGame
             _investigated = false;
             _items = new ItemContainer();
         }
-
-        private ItemContainer _items;
 
         public IItem Pickup(string itemName)
         {

@@ -12,7 +12,6 @@ namespace StarterGame
     
     public interface IRoomDelegate
     {
-
         public Room ContainingRoom{ set; get; }
         public Room RoomDelegate { get; set; }
         public void RoomDidSetExit(string exitName, Door door);
@@ -67,7 +66,6 @@ namespace StarterGame
         string Name {get;}
         string Description {get;}
     }
-
     public interface IItemContainer : IItem
     {
         void Add(IItem item);

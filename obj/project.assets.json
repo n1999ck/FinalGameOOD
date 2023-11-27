@@ -8,19 +8,19 @@
     "net6.0": []
   },
   "packageFolders": {
-    "/home/nick/.nuget/packages/": {}
+    "/home/nico/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/nick/Code/FinalGameOOD/StarterGame.csproj",
+      "projectUniqueName": "/home/nico/Code/FinalGameOOD/StarterGame.csproj",
       "projectName": "StarterGame",
-      "projectPath": "/home/nick/Code/FinalGameOOD/StarterGame.csproj",
-      "packagesPath": "/home/nick/.nuget/packages/",
-      "outputPath": "/home/nick/Code/FinalGameOOD/obj/",
+      "projectPath": "/home/nico/Code/FinalGameOOD/StarterGame.csproj",
+      "packagesPath": "/home/nico/.nuget/packages/",
+      "outputPath": "/home/nico/Code/FinalGameOOD/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/nick/.nuget/NuGet/NuGet.Config"
+        "/home/nico/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
