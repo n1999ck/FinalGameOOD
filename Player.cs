@@ -1,20 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System;
-using System.Runtime.CompilerServices;
 
 namespace StarterGame
 {
     /*
      * Spring 2023
      */
-    public class Player
+    public class Player : ICharacter
     {
         private Room _currentRoom = null;
         private IItem _hand = null;
         public Room CurrentRoom { get { return _currentRoom; } set { _currentRoom = value; } }
         private IItemContainer _inventory;
         private float _maximumWeight;
+        private Stack<Door> _doorHistory;
 
         public Player(Room room)
         {
@@ -22,6 +21,7 @@ namespace StarterGame
             _hand = null;
             _inventory = new ItemContainer("Inventory", 0f);
             _maximumWeight = 10f;
+            _doorHistory = new Stack<Door>();
         }
 
         public void Give(IItem item)
@@ -48,6 +48,7 @@ namespace StarterGame
                 NotificationCenter.Instance.PostNotification(notification);
                 //Remember we don't have direct access to Any Part of the room
                 // Like reaching into someones pants to get their wallet to borrow a dollar
+                _doorHistory.Push(nextDoor);
                 CurrentRoom = nextDoor.RoomOnTheOtherSide(CurrentRoom);
                 notification = new Notification("PlayerDidEnterRoom", this);
                 NotificationCenter.Instance.PostNotification(notification);
@@ -56,6 +57,34 @@ namespace StarterGame
             else
             {
                 ErrorMessage("\nThe door in " + direction + " is not open.");
+            }
+        }
+        public void Back()
+        {
+            if (_doorHistory.Count > 0)
+            {
+                if (_doorHistory.Peek() != null)
+                {
+                    Door lastDoor = _doorHistory.Pop();
+                    if (lastDoor.IsOpen)
+                    {
+                        Notification notification = new Notification("PlayerWillEnterRoom", this);
+                        NotificationCenter.Instance.PostNotification(notification);
+                        CurrentRoom = lastDoor.RoomOnTheOtherSide(CurrentRoom);       
+                        notification = new Notification("PlayerDidEnterRoom", this);
+                        NotificationCenter.Instance.PostNotification(notification);
+                        NormalMessage("\n" + this.CurrentRoom.ToString());
+                    }
+                    else
+                    {
+                        ErrorMessage("\nThe door is not open.");   
+                    }
+                }
+                else
+                {
+                    WarningMessage("There are no movements in your history!");
+                }
+                
             }
         }
 
@@ -134,11 +163,20 @@ namespace StarterGame
                 InfoMessage("Items:\n" + pointOfInterest.ItemsList);
                 pointOfInterest.Investigated = true;
             }
-            
+            else
+            {
+                InfoMessage(CurrentRoom.Investigate());
+            }
         }
 
+        //This way Investigate can also be used with no second word to look around the room
+        public void Investigate()
+        {
+            Notification notification = new Notification("PlayerWillInvestigate", this);
+            NotificationCenter.Instance.PostNotification(notification);
+            InfoMessage(CurrentRoom.Investigate());
+        }
         public void Inspect(string itemName){
-            //TODO: fix so doesnt take item
             IItem item = CurrentRoom.Pickup(itemName);
             if (item != null)
             {
@@ -175,7 +213,7 @@ namespace StarterGame
             IItem item = CurrentRoom.Pickup(itemName);
             if (item != null)
             {
-                if(_inventory.Weight + item.Weight <= _maximumWeight)
+                if(item.CanPickUp && _inventory.Weight + item.Weight <= _maximumWeight)
                 {
                     Give(item);
                     InfoMessage("You picked up " + _hand.Name);
@@ -242,7 +280,7 @@ namespace StarterGame
             }
         }
 
-        public void Show(Character character, string itemName)
+        public void Show(NPCharacter character, string itemName)
         {
             
         }

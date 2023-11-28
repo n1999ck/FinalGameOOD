@@ -82,14 +82,8 @@ namespace StarterGame
             door = Door.Connect(lockerRoom, lobby, "south", "north");
             door = Door.Connect(breakRoom, lobby, "west", "east");
             door = Door.Connect(breakRoom, office, "north","south");
+            
 
-
-            /*
-            RegularLock rl = new RegularLock();
-            door.Lockable = rl;
-            Keyed keyed = new Keyed("Key1");
-            rl.Keyed = keyed;
-            */
             //Locking the office
             ILockable rl = LockableFacade.MakeLockable("RegularLock", "officeKey"); //Making as ILockable instead of RegularLock- minimizes potential for error
             door.Lockable = rl;
@@ -100,12 +94,12 @@ namespace StarterGame
             
             _exit = parkingLot;
             
-            TrapRoom tr = new TrapRoom("shazam");
+            TrapRoom tr = new TrapRoom("");
             backEmbalmingRoom.RoomDelegate = tr;
             refrigerator.RoomDelegate = tr;
 
             //Create items, place them
-            IItem item = new Item("IPad", 0.5f);
+            IItem item = new Item("IPad", 0.5f, true);
             IItem decorator = new Item("cover", 0.2f);
             item.AddDecorator(decorator);
             parkingLot.Drop(item);
@@ -114,9 +108,12 @@ namespace StarterGame
             item = new Item("Embalming fluid", 1.3f);
             parkingLot.Drop(item);
 
-            PointOfInterest anthonysCar = new PointOfInterest("AnthonysCar", "A white 1985 Oldsmobile Cutlass Ciera. He's been driving it since it was new. It looks well-maintained, inside and out.");
+            PointOfInterest anthonysCar = new PointOfInterest("AnthonysCar", "A white 1985 Oldsmobile Cutlass Ciera. He's been driving it since it was new. It looks well-maintained, inside and out.", parkingLot);
             parkingLot.AddPointofInterest("AnthonysCar", anthonysCar);
             item = new Item("Wallet", 0.1f);
+            anthonysCar.Drop(item);
+
+            
             return parkingLot;
         }
     }

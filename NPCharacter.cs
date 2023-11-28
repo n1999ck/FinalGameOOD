@@ -6,11 +6,13 @@ namespace StarterGame
     /*
      * Spring 2023
      */
-    public class Character
+    public class NPCharacter : ICharacter
     {
         private Room _currentRoom = null;
         public Room CurrentRoom { get { return _currentRoom; } set { _currentRoom = value; } }
-
+        
+        private IItemContainer _inventory;
+        
         //I guess we can have pointers to items here?
         public Dictionary<string, string> _itemResponses = null;
         
@@ -20,7 +22,7 @@ namespace StarterGame
         //Here we can have either a string name of point of interest or a pointer to a POI
         private Dictionary<string, string> _talkResponses = null;
 
-        public Character(Room room, string defaultResponse)
+        public NPCharacter(Room room, string defaultResponse)
         {
             _currentRoom = room;
             _itemResponses = new Dictionary<string, string>();
@@ -28,19 +30,17 @@ namespace StarterGame
             _defaultResponse = defaultResponse;
 
         }
-
-        //Only thing Character can do besides messages
         public void WalkTo(string direction)
         {
             Door nextDoor = this.CurrentRoom.GetExit(direction);
             if (nextDoor.IsOpen)
             {
-                Notification notification = new Notification("CharacterWillEnterRoom", this);
+                Notification notification = new Notification("NPCharacterWillEnterRoom", this);
                 NotificationCenter.Instance.PostNotification(notification);
                 //Remember we don't have direct access to Any Part of the room
                 // Like reaching into someones pants to get their wallet to borrow a dollar
                 CurrentRoom = nextDoor.RoomOnTheOtherSide(CurrentRoom);
-                notification = new Notification("CharacterDidEnterRoom", this);
+                notification = new Notification("NPCharacterDidEnterRoom", this);
                 NotificationCenter.Instance.PostNotification(notification);
                 //NormalMessage("\n" + this.CurrentRoom.ToString());
             }
@@ -61,22 +61,38 @@ namespace StarterGame
         }
 
         
-
-        public void OutputMessage(string message)
+        public void Give(IItem item)
         {
-            Console.WriteLine(message);
+            if(item != null)
+            {
+                _inventory.Add(item);
+            }
         }
-        
 
-        //Get character's response for an item
+        public IItem Take(string itemName)
+        {
+            return _inventory.Remove(itemName);
+        }
+
+        //Get npcharacter's response for an item
         public string LookAt(IItem item)
         {
-            //Item should have dictionary of character names and their responses to the item
+            //Item should have dictionary of npcharacter names and their responses to the item
             //otherwise, use a default string
             string response = _defaultResponse;
             _itemResponses.TryGetValue(item.Name, out response);
             return response;
            
+        }
+
+        public void Drop(string itemName)
+        {
+            IItem item = Take(itemName);
+            if (item != null)
+            {
+                _currentRoom.Drop(item);
+                //TODO: Decide if a string should be output, implement
+            }   
         }
 
 

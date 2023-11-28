@@ -1,0 +1,44 @@
+{
+    "Characters":
+        {
+            "Name" : "",
+            "Age" : "",
+            "Gender" : "",
+            "Description" : "",
+            "Dialogue" :
+            {
+                "ItemDialogue" : 
+                    {
+                        "Default" : "",
+                        "Item1":"",
+                        "Item2":""
+                    },
+                "PlaceDialogue" :
+                    {
+                        "default" : "",
+                        "parkingLot" : "",
+                        "lobby" : "",
+                        "deliveryBay" :"",
+                        "frontEmbalmingRoom" :"",
+                        "backEmbalmingRoom" :"",
+                        "refrigerator" :"",
+                        "breakRoom" :"",
+                        "office" :"",
+                        "lockerRoom" :""
+                    },
+                "TalkDialogue" :
+                    {
+                        "default" :"",
+                        "topic1" : 
+                            {
+                                "response1" : ""
+                            },
+                        "topic2" :
+                            {
+                                "response2" : ""
+                            }
+                    }
+                
+            }
+        }
+}

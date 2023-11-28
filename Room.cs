@@ -125,6 +125,24 @@ namespace StarterGame
             _pointsOfInterest.TryGetValue(name, out PoIToReturn);           
             return PoIToReturn;
         }
+
+        public string Investigate(){
+            string returnString = "";
+            if (_pointsOfInterest.Count > 0)
+            {
+                returnString += "Points of Interest in " + Tag + ":\n";
+                foreach (PointOfInterest pointOfInterest in _pointsOfInterest.Values)
+                {
+                    returnString += pointOfInterest.Name + "\n";
+                }
+                returnString += "Use the command Investigate <Point of Interest Name> to look closer.";
+            }
+            else
+            {
+                returnString += "There is nothing of interest in " + Tag + ".";
+            }
+            return returnString;
+        }
     }
 
     public class TrapRoom : IRoomDelegate

@@ -17,7 +17,7 @@ namespace StarterGame
             }
             else
             {
-                player.WarningMessage("\nInvestigate what?");
+                player.Investigate();
             }
             return false;
         }

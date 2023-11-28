@@ -13,24 +13,9 @@ namespace StarterGame
     public interface ICharacter
     {                
         public void Give(IItem item);
-
         public IItem Take(string itemName);
         public void WalkTo(string direction);
-
-        public void Open(string direction);
-        public void Unlock(string direction);
-        public void Shout(string word);
-        public void Investigate(string pointOfInterestName);
-
-        public void Inspect(string itemName);
-
         public void Drop(string itemName);
-
-
-        public void Pickup(string itemName);
-   
-        public void Insert(string exitName);
-        public void Show(ICharacter character, string itemName);
     }
     
     public interface IRoomDelegate
@@ -79,13 +64,14 @@ namespace StarterGame
         float Weight { get; }
         string LongName {get;}
         string Description { get; }
-
         bool IsContainer { get; }
         void AddDecorator(IItem decorator);
+        bool CanPickUp { get; }
     }
 
     public interface IPointOfInterest
     {
+        public Room ContainingRoom{ set; get; }
         string Name {get;}
         string Description {get;}
     }

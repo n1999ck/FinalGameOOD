@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Reflection.Metadata;
 
 namespace StarterGame
 {
@@ -8,6 +9,7 @@ namespace StarterGame
         private float _weight;
         private IItem _decorator;
         private string _longDescription;
+        private bool _canPickUp;
 
         public string Name {get{return _name;}}
         public float Weight {get{return _weight +  (_decorator == null ? 0 : _decorator.Weight);}}
@@ -20,14 +22,17 @@ namespace StarterGame
                 return Name + ( _decorator ==null ? "" : " with " + _decorator.LongName);
             }
         }
-        public Item() : this("Nameless", 0){}
-        public Item(string Name) : this(Name, 1f){}
+        public bool CanPickUp { get { return _canPickUp; } }
+        public Item() : this("Nameless", 0, true){}
+        public Item(string Name) : this(Name, 1f, true){}
+        public Item(string Name, float Weight) : this(Name, 1f, true){}
 
         //Designated constructor
-        public Item(string Name, float Weight)
+        public Item(string Name, float Weight, bool CanPickUp)
         {
             _name = Name;
             _weight = Weight;
+            _canPickUp = CanPickUp;
             _decorator = null;
         }
 
@@ -53,6 +58,8 @@ namespace StarterGame
         private float _weight;
         private IItem _decorator;
         private bool _isHandheld;
+        private bool _canPickUp;
+        public bool CanPickUp { get { return _canPickUp; } }
         private Dictionary<string, IItem> _items;
         public string Name {get{return _name;}}
         public float Weight
@@ -111,11 +118,11 @@ namespace StarterGame
             }
             return itemToReturn;
         }
-        public ItemContainer() : this("Nameless", 0){}
-        public ItemContainer(string Name) : this(Name, 1f){}
+        public ItemContainer() : this("Nameless", 0, true, true){}
+        public ItemContainer(string Name, float Weight) : this(Name, 1f, true, true){}
 
         //Designated constructor
-        public ItemContainer(string Name, float Weight)
+        public ItemContainer(string Name, float Weight, bool IsHandheld, bool CanPickUp)
         {
             _name = Name;
             _weight = Weight;
