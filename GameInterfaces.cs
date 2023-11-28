@@ -9,6 +9,29 @@ namespace StarterGame
     {
         public void Execute(Player player);
     }
+
+    public interface ICharacter
+    {                
+        public void Give(IItem item);
+
+        public IItem Take(string itemName);
+        public void WalkTo(string direction);
+
+        public void Open(string direction);
+        public void Unlock(string direction);
+        public void Shout(string word);
+        public void Investigate(string pointOfInterestName);
+
+        public void Inspect(string itemName);
+
+        public void Drop(string itemName);
+
+
+        public void Pickup(string itemName);
+   
+        public void Insert(string exitName);
+        public void Show(ICharacter character, string itemName);
+    }
     
     public interface IRoomDelegate
     {

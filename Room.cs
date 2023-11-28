@@ -22,6 +22,8 @@ namespace StarterGame
         private string _description;
         public string Description { get {return _description; } set { _description = value; } }
 
+        private List<ICharacter> _characters;
+
         private ItemContainer _items;
 
         private IRoomDelegate _roomDelegate;
@@ -57,7 +59,7 @@ namespace StarterGame
             _exits = new Dictionary<string, Door>();
             this.Tag = tag;
             this._roomDelegate = null; // if you want a delegate you must set
-            this._items = new ItemContainer();
+            this._items = new ItemContainer("Floor", 0f);
             this._pointsOfInterest = new Dictionary<string, PointOfInterest>();
         }
 

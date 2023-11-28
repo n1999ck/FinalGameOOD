@@ -13,10 +13,29 @@ namespace StarterGame
         private Room _currentRoom = null;
         private IItem _hand = null;
         public Room CurrentRoom { get { return _currentRoom; } set { _currentRoom = value; } }
+        private IItemContainer _inventory;
+        private float _maximumWeight;
 
         public Player(Room room)
         {
             _currentRoom = room;
+            _hand = null;
+            _inventory = new ItemContainer("Inventory", 0f);
+            _maximumWeight = 10f;
+        }
+
+        public void Give(IItem item)
+        {
+            if(item != null)
+            {
+                _inventory.Add(item);
+            }
+        }
+
+        public IItem Take(string itemName)
+        {
+            return _inventory.Remove(itemName);
+
         }
 
         //Only thing player can do besides messages
@@ -119,6 +138,7 @@ namespace StarterGame
         }
 
         public void Inspect(string itemName){
+            //TODO: fix so doesnt take item
             IItem item = CurrentRoom.Pickup(itemName);
             if (item != null)
             {
@@ -128,6 +148,20 @@ namespace StarterGame
             else
             {
                 WarningMessage("There is no item named " + itemName + " in the room.");
+            }
+        }
+
+        public void Drop(string itemName)
+        {
+            IItem item = Take(itemName);
+            if (item != null)
+            {
+                CurrentRoom.Drop(item);
+                InfoMessage("You dropped " + itemName);
+            }
+            else
+            {
+                WarningMessage("There is no item named " + itemName + " in your inventory.");
             }
         }
 
@@ -141,8 +175,16 @@ namespace StarterGame
             IItem item = CurrentRoom.Pickup(itemName);
             if (item != null)
             {
-                _hand = item;
-                InfoMessage("You picked up " + _hand.Name);
+                if(_inventory.Weight + item.Weight <= _maximumWeight)
+                {
+                    Give(item);
+                    InfoMessage("You picked up " + _hand.Name);
+                }
+                else
+                {
+                    WarningMessage("You don't have enough room in your bag.");
+                    CurrentRoom.Drop(item);
+                }
             }
             else
             {
@@ -198,6 +240,11 @@ namespace StarterGame
             {
                 WarningMessage("There is no door to the " + exitName);
             }
+        }
+
+        public void Show(Character character, string itemName)
+        {
+            
         }
     }
 
