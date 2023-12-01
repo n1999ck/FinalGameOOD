@@ -37,7 +37,7 @@ namespace StarterGame
             return _inventory.Remove(itemName);
 
         }
-        
+
         public void WalkTo(string direction)
         {
             Door nextDoor = this.CurrentRoom.GetExit(direction);
@@ -69,14 +69,14 @@ namespace StarterGame
                     {
                         Notification notification = new Notification("PlayerWillEnterRoom", this);
                         NotificationCenter.Instance.PostNotification(notification);
-                        CurrentRoom = lastDoor.RoomOnTheOtherSide(CurrentRoom);       
+                        CurrentRoom = lastDoor.RoomOnTheOtherSide(CurrentRoom);
                         notification = new Notification("PlayerDidEnterRoom", this);
                         NotificationCenter.Instance.PostNotification(notification);
                         NormalMessage("\n" + this.CurrentRoom.ToString());
                     }
                     else
                     {
-                        ErrorMessage("\nThe door is not open.");   
+                        ErrorMessage("\nThe door is not open.");
                     }
                 }
                 else
@@ -148,7 +148,7 @@ namespace StarterGame
         {
             NormalMessage("You shout \"" + word + "\" out loud.");
             Dictionary<string, Object> userInfo = new Dictionary<string, object>();
-            userInfo["word"] = word; 
+            userInfo["word"] = word;
             Notification notification = new Notification
                 ("PlayerDidShoutAWord", this, userInfo); //designated constructor: can add userInfo to carry the info
             NotificationCenter.Instance.PostNotification(notification);
@@ -260,7 +260,7 @@ namespace StarterGame
                     WarningMessage("There is no item called " + itemName);
                 }
             }
-            
+
         }
 
         public void ColoredMessage(string message, ConsoleColor newColor)
@@ -313,16 +313,30 @@ namespace StarterGame
             }
         }
 
-        public void Show(NPCharacter character, string itemName)
+        public void Show(string characterName, string itemName)
         {
+            NPCharacter character = null;
+            CurrentRoom.Characters.TryGetValue(characterName, out character);
             IItem item = Take(itemName);
-            if (item != null)
+            if (character != null)
             {
-                if (character.CurrentRoom == _currentRoom)
+                if (item != null)
                 {
-                    character.GetNPCState().LookAt(item);
+                    if (character.CurrentRoom == _currentRoom)
+                    {
+                        character.GetNPCState().LookAt(item);
+                    }
+                }
+                else
+                {
+                    ErrorMessage("I don't have " + itemName);
                 }
             }
+            else
+            {
+                InfoMessage("Couldn't find " + characterName + "in the room!");
+            }
+            
         }
         public void Talk(NPCharacter character, string topic)
         {

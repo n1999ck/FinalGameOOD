@@ -22,7 +22,8 @@ namespace StarterGame
         private string _description;
         public string Description { get {return _description; } set { _description = value; } }
 
-        private List<ICharacter> _characters;
+        private Dictionary<string, NPCharacter> _characters;
+        public Dictionary<string, NPCharacter> Characters {get {return _characters;}}
 
         private ItemContainer _items;
 
@@ -63,7 +64,7 @@ namespace StarterGame
             this._roomDelegate = null; // if you want a delegate you must set
             this._items = new ItemContainer("Floor", 0f);
             this._pointsOfInterest = new Dictionary<string, PointOfInterest>();
-            this._characters = new List<ICharacter>();
+            this._characters = new Dictionary<string, NPCharacter>();
         }
 
         public void SetExit(string exitName, Door door)
@@ -112,7 +113,7 @@ namespace StarterGame
             }
             else
             {
-                foreach(Character character in _characters)
+                foreach(NPCharacter character in _characters.Values)
                 {
                     desc += character.ToString() + "\n";
                 }
