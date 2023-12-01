@@ -17,15 +17,7 @@ Required elements:
         - Move
         - Items
         - Profiles
-        
-    - Trial section commands:
-        - Profiles
-        - Items
-        - Penalty System 
-        - Cross Examination
-            - Back/Forward
-            - Press
-            - Present
+
     
     - Characters
         - Can move
