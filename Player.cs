@@ -193,6 +193,10 @@ namespace StarterGame
             }
         }
 
+        public void Inventory(){
+            InfoMessage(_inventory.Description);
+        }
+
         public void Drop(string itemName)
         {
             IItem item = Take(itemName);
@@ -311,7 +315,18 @@ namespace StarterGame
 
         public void Show(NPCharacter character, string itemName)
         {
-            
+            IItem item = Take(itemName);
+            if (item != null)
+            {
+                if (character.CurrentRoom == _currentRoom)
+                {
+                    character.GetNPCState().LookAt(item);
+                }
+            }
+        }
+        public void Talk(NPCharacter character, string topic)
+        {
+            character.GetNPCState().TalkAbout(topic);
         }
     }
 

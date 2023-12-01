@@ -103,7 +103,20 @@ namespace StarterGame
         override
         public string ToString()
         {
-            string desc = "You are " + this.Tag + ".\n" + this.GetExits() + "\n" + this.Investigate() + "\nItems:\n" + _items.Description;
+            string desc = "You are " + this.Tag + ".\n" + this.GetExits() + 
+            "\n" + this.Investigate() + "\nItems:\n" + _items.Description +
+             "\nCharacters:\n";
+            if(_characters.Count == 0)
+            {
+                desc += "None";
+            }
+            else
+            {
+                foreach(Character character in _characters)
+                {
+                    desc += character.ToString() + "\n";
+                }
+            }
             return _roomDelegate == null ? desc :
                 _roomDelegate.RoomDidGetDescription(desc);
         }
@@ -116,18 +129,18 @@ namespace StarterGame
         public IItem Pickup(String itemName)
         { 
             IItem returnItem = _items.GetItem(itemName);
-            if (returnItem != null)
-            {
-                return returnItem;
-            }
-            else
+            if (returnItem ==null)
             {
                 foreach(PointOfInterest pointOfInterest in _pointsOfInterest.Values)
                 {
-                    returnItem =pointOfInterest.Pickup(itemName);
+                    returnItem = pointOfInterest.Pickup(itemName);
+                    if (returnItem != null)
+                    {
+                        break;  
+                    }
                 }
             }
-            return _items.GetItem(itemName);
+            return returnItem;
         }
 
         public void AddPointofInterest(PointOfInterest pointOfInterest)

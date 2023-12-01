@@ -12,7 +12,8 @@ namespace StarterGame
         private static Command[] _commandArray = { new GoCommand(), 
             new QuitCommand(), new ShoutCommand(), new OpenCommand(), 
             new UnlockCommand(), new InspectCommand(), new InsertCommand(), 
-            new PickupCommand(), new InvestigateCommand(), new BackCommand() };
+            new PickupCommand(), new InvestigateCommand(), new BackCommand(), 
+            new InventoryCommand() };
 
         public CommandWords() : this(_commandArray) {}
 
