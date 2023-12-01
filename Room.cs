@@ -61,6 +61,7 @@ namespace StarterGame
             this._roomDelegate = null; // if you want a delegate you must set
             this._items = new ItemContainer("Floor", 0f);
             this._pointsOfInterest = new Dictionary<string, PointOfInterest>();
+            this._characters = new List<ICharacter>();
         }
 
         public void SetExit(string exitName, Door door)
@@ -100,7 +101,7 @@ namespace StarterGame
         override
         public string ToString()
         {
-            string desc = "You are " + this.Tag + ".\n *** " + this.GetExits() +  "\nItems: " + _items.Description;
+            string desc = "You are " + this.Tag + ".\n" + this.GetExits() + "\n" + this.Investigate() + "\nItems:\n" + _items.Description;
             return _roomDelegate == null ? desc :
                 _roomDelegate.RoomDidGetDescription(desc);
         }
@@ -130,12 +131,12 @@ namespace StarterGame
             string returnString = "";
             if (_pointsOfInterest.Count > 0)
             {
-                returnString += "Points of Interest in " + Tag + ":\n";
+                returnString += "Points of Interest:\n";
                 foreach (PointOfInterest pointOfInterest in _pointsOfInterest.Values)
                 {
                     returnString += pointOfInterest.Name + "\n";
                 }
-                returnString += "Use the command Investigate <Point of Interest Name> to look closer.";
+                returnString += "Use the command 'Investigate <PointofInterestName>' to look closer.";
             }
             else
             {

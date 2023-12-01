@@ -37,8 +37,7 @@ namespace StarterGame
             return _inventory.Remove(itemName);
 
         }
-
-        //Only thing player can do besides messages
+        
         public void WalkTo(string direction)
         {
             Door nextDoor = this.CurrentRoom.GetExit(direction);
@@ -82,9 +81,12 @@ namespace StarterGame
                 }
                 else
                 {
-                    WarningMessage("There are no movements in your history!");
+                    WarningMessage("I have nowhere to return to!");
                 }
-                
+            }
+            else
+            {
+                WarningMessage("I have nowhere to return to!");
             }
         }
 
@@ -124,7 +126,7 @@ namespace StarterGame
                 {
                     if (door.Unlock())
                     {
-                        InfoMessage("The door on " +direction + " is now unlocked.");
+                        InfoMessage("The door on " + direction + " is now unlocked.");
                     }
                     else
                     {
@@ -162,6 +164,8 @@ namespace StarterGame
                 InfoMessage("You take a closer look at " + pointOfInterestName + ".\nIt seems to be " + pointOfInterest.Description);
                 InfoMessage("Items:\n" + pointOfInterest.ItemsList);
                 pointOfInterest.Investigated = true;
+                notification = new Notification("PlayerDidInvestigate", this);
+                NotificationCenter.Instance.PostNotification(notification);
             }
             else
             {

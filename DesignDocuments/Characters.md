@@ -27,10 +27,10 @@ Original Characters:
 
 - Anthony Boone, M, 60
     - A respected embalmer who has worked in the industry for decades. Plans to retire at 62. Mysterious background.
-- Angel [lastname], F, 35
+- Angel Hart, F, 35
     - An ex-artist who changed careers and became an embalmer. Loves the macabre and usually wears gothic attire.
 - Sophie Balmer, F, 26
-    - Amelia's niece. A shy, reserved individual and embalmer-in-training.
+    - Amelia's niece, a shy and reserved individual. embalmer-in-training.
 - Amelia Balmer, F, 47
     - The deceased. Owner and manager of the ACE embalming franchise; was not an embalmer.
 - Derrick Porter, M, 32

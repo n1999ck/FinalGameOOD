@@ -5,17 +5,24 @@ Parking Lot -
     Points of Interest:
         - Anthony's Car: A white 1985 Oldsmobile Cutlass Ciera. He's been driving it since it was new. It looks well-maintained, inside and out.
             - Items:
+                Wallet; A well-worn leather wallet. It has a photo slot which holds a picture of a family. The driver's lisence is Anthony's.; parkingLot; anthonysCar
+
         - Amelia's Car: A red 2018 Acura MDX. It looks like it's been to the car wash within the last week or so. The inside is a little cluttered.
             - Items:
+                - Necklace: A diamond hanging on a golden chain. It's a little gaudy, but the sheer size of the rock compensates.
+
         - Angel's Car: A black 2010 Ford Expedition. It needs a wash. Inside, it has a few decorations.
             - Items:
+                - 
+
         - Sophie's Car: A tan 2009 Toyota Prius. Its back bumper sports a sizeable dent. The inside is nearly empty.
             - Items:
-                Something related to motive in glove box maybe
+                - Photo: A family photo from a holiday party. The setting seems to be a high-income home. Amelia and Sophie are visible.
+
     Exits:
         - North: To Lobby
         - West: To Delivery Bay
-    Items:
+    
 
 Lobby -
     Description:
@@ -23,7 +30,7 @@ Lobby -
     Points of Interest:
         - Front Desk: A large wooden desk, with a drawer, used as the reception desk for ACE.
             Items:
-        - Front Desk Computer: An aging desktop PC used for email and schedules.
+                - Front Desk Computer: An aging desktop PC used for email and schedules. Nothing of interest is visible on it.
     Exits:
         - South: To Parking Lot
         - East: To Office
@@ -39,8 +46,8 @@ Office -
             - Items:
         - Desk:
             - Items:
-        - Office Computer:
-            - Items: 
+                - Office Computer:
+        
     Exits:
         - West: To lobby
     Items:
@@ -76,22 +83,42 @@ Locker Room -
             - Angel's Locker: Angel's locker is decorated with faux flowers. It's a bit cluttered with clothes and papers.
                 - Items:
                     - Angel's outfit: Angel's street clothes, worn before changing into PPE for the pickup. A tan cardigan, white blouse, and blue jeans.
-                    - Papers:
-    Exits:
-    Items:
+                    - Folder: A two-pocket folder. Inside is a document describing the process of will execution.
+                    - Bracelet: A gaudy bracelet consisting of a golden chain and large diamond.
 
-Back Embalming Room -
-    Description:
+Back Embalming Room - 
+    Description: An embalming room. It's clean and organized, with various tools laid neatly on the counters. Two prep tables are in the room - no clients are on them.
+        Points of Interest:
+            - Counter: An organized counter with a large metal sink and cabinets above and below.
+                Items:
+                    - Makeup kit: A specialized set of cosmetics for the dead. The bag holds everything from nail polish to foundation.
+                    - Fluids: An array of plastic bottles, each labeled as a different type of embalming fluid.
+                    - Suturing kit: A plastic case holding a set of needles, forceps, and suture materials for wounds. Its contents are disorganized as if the case has been dropped.
+            - Tables: Tables used for embalming. They're metal, with plastic head rests at one end.
+                Items:
+                    - Embalming machine: A smallish machine; a metal base with plastic tubes attached and a large glass cylinder on top. Used for injecting embalming fluid.
+            
     Exits:
     Items:
 
 Front Embalming Room -
-    Description:
-    Exits:
-    Items:
+    Description: An embalming room. It looks like it was organized before the murder, but tools are now strewn about.
+        Points of Interest:
+            - Bloodstain: The blood spilled during Amelia's murder. It is a relatively small amount, and the puddle looks surprisingly uniform. A few circular droplets lie nearby.
+            - Footprints: Two pairs of bloody footprints are visible. One leads just a few feet from the bloodstain to where Amelia fell. The other footprints are fainter, leading south for a few more feet but disappearing before the door.
+    Exits: North, south
 
 Delivery Bay -
-    Description:
+    Description: An area for receiving new bodies and sending out embalmed patients. A walk-in refrigerator sits against the western wall. 
     Exits:
         - East: To Parking Lot
+        - North: To Front Embalming Room
+        - West: To Refrigerator   
     Items:
+
+Refrigerator -
+    Description: A walk-in refrigerator, used for storing bodies before they're prepared. Currently, no clients are waiting here.
+        - Points of Interest:
+            - Floor
+        - Items:
+            - Trocar: A metallic embalming instrument, about 16 inches long and ending in a sharp point. It lies on the floor

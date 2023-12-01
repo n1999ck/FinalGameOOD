@@ -1,22 +1,10 @@
-using System;
 using System.Collections.Generic;
 
-namespace StarterGame
-{
-    /*
-     * Spring 2023
-     */
-    public class NPCharacter : ICharacter
-    {
+namespace StarterGame {
+    public class AssistantCharacter : ICharacter
+        {
         private Room _currentRoom = null;
         public Room CurrentRoom { get { return _currentRoom; } set { _currentRoom = value; } }
-
-        private string _name;
-        public string Name { get { return _name; } set { _name = value; } }
-        private string _age;
-        public string Age { get { return _age; } set { _name = Age; } }
-        private string _description;
-        public string Description { get { return _description; } set { _description = value; } }
         
         private IItemContainer _inventory;
         
@@ -29,14 +17,13 @@ namespace StarterGame
         //Here we can have either a string name of point of interest or a pointer to a POI
         private Dictionary<string, string> _talkResponses = null;
 
-        public NPCharacter(Room room, string name, string age, string description)
+        public AssistantCharacter(Room room, string defaultResponse)
         {
             _currentRoom = room;
-            _name = name;
-            _age = age;
-            _description = description;
             _itemResponses = new Dictionary<string, string>();
             _talkResponses = new Dictionary<string, string>();
+            _defaultResponse = defaultResponse;
+
         }
         public void WalkTo(string direction)
         {

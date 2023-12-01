@@ -19,14 +19,17 @@ namespace StarterGame
 
         public Game()
         {
-            
             _playing = false; //not playing yet
             _parser = new Parser(new CommandWords()); //give commandwords, pretty much serves as a dictionary
-            //CreateWorld method creates game world with everything needed, 
-            //returns entrance to that world as player in starter room.
             _player = new Player(GameWorld.Instance.Entrance);
             _clock = new GameClock(1000);
             NotificationCenter.Instance.AddObserver("GameClockTick", OnGameClockTick);
+            NotificationCenter.Instance.AddObserver("PlayerDidInvestigate", OnInvestigation);
+        }
+
+        public void OnInvestigation(Notification notification)
+        {
+            Console.WriteLine("Player investigated " + notification.ToString());
         }
 
         public void OnGameClockTick(Notification notification)
@@ -142,7 +145,7 @@ namespace StarterGame
 
         public string Welcome()
         {
-            return "Welcome to the World of CSU!\n\n The World of CSU is a new, incredibly boring adventure game.\n\nType 'help' if you need help." + _player.CurrentRoom.ToString();
+            return "Welcome to the World of CSU!\n\n The World of CSU is a new, incredibly boring adventure game.\n\nType 'help' if you need help.\n\n" + _player.CurrentRoom.ToString();
         }
 
         public string Goodbye()

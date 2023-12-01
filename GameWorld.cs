@@ -113,7 +113,15 @@ namespace StarterGame
             item = new Item("Wallet", 0.1f);
             anthonysCar.Drop(item);
 
+            NPCharacter sophieBalmer = new NPCharacter(office, "Sophie Balmer", "26", "Amelia's niece. A shy, reserved individual and embalmer-in-training.");
+            NPCharacter angelHart = new NPCharacter(breakRoom, "Angel Hart", "37", "An ex-artist who changed careers and became an embalmer. Loves the macabre and usually wears gothic attire.");
+            NPCharacter detectiveSholmes = new NPCharacter(frontEmbalmingRoom, "Detective Sholmes", "39", "A detective in my department. Has a taste for the flamboyant and dramatic.");
+            NPCharacter mayaFey = new NPCharacter(parkingLot, "Maya Fey", "20", "My assistant. A spiritual person who doesn't take things too seriously.");
+
             
+
+
+
             return parkingLot;
         }
     }
