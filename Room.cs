@@ -101,6 +101,28 @@ namespace StarterGame
             return exitNames;
         }
 
+        public void AddCharacter(NPCharacter character)
+        {
+            _characters[character.Name] = character;
+        }
+        public string roomCharacters()
+        {
+            string returnstring = "\nCharacters:\n";
+            if(_characters.Count == 0)
+            {
+                returnstring += "None";
+            }
+            else
+            {
+                foreach(string characterName in _characters.Keys)
+                {
+                    returnstring += characterName + "\n";
+                }
+            }
+            return returnstring;
+
+        }
+
         override
         public string ToString()
         {
@@ -113,9 +135,9 @@ namespace StarterGame
             }
             else
             {
-                foreach(NPCharacter character in _characters.Values)
+                foreach(string characterName in _characters.Keys)
                 {
-                    desc += character.ToString() + "\n";
+                    desc += characterName + "\n";
                 }
             }
             return _roomDelegate == null ? desc :

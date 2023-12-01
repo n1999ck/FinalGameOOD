@@ -21,18 +21,13 @@ namespace StarterGame
             _parser = new Parser(new CommandWords()); //give commandwords, pretty much serves as a dictionary
             _player = new Player(GameWorld.Instance.Entrance);
             _clock = new GameClock(1000);
-            NotificationCenter.Instance.AddObserver("GameClockTick", OnGameClockTick);
-            NotificationCenter.Instance.AddObserver("PlayerDidInvestigate", OnInvestigation);
         }
 
-        public void OnInvestigation(Notification notification)
-        {
-            Console.WriteLine("Player investigated " + notification.ToString());
-        }
+        
 
-        public void OnGameClockTick(Notification notification)
+        public void OnMeetingNewCharacter(Notification notification)
         {
-            //Console.WriteLine("The game time is " + _clock.TimeInGame);
+            Console.WriteLine("Player met new character");
         }
 
         /**
@@ -63,7 +58,7 @@ namespace StarterGame
         public void Start()
         {
             _playing = true;
-            _player.InfoMessage(Welcome());
+            _player.InfoMessage(Introduction());
         }
 
         public void End()
@@ -73,9 +68,9 @@ namespace StarterGame
             _player.InfoMessage(Goodbye());
         }
 
-        public string Welcome()
+        public string Introduction()
         {
-            return "Welcome to the World of CSU!\n\n The World of CSU is a new, incredibly boring adventure game.\n\nType 'help' if you need help.\n\n" + _player.CurrentRoom.ToString();
+            return "You are a detective working on a murder case.\n The murder took place at ACE Embalming Co., an embalming facility run as a franchise by the Balmer family.\n Amelia Balmer, the franchise owner, was the victim of the crime.\nExplore the crime scene to determine what happened and who's guilty.\n" + _player.CurrentRoom.ToString();
         }
 
         public string Goodbye()

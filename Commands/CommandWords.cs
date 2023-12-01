@@ -13,7 +13,7 @@ namespace StarterGame
             new QuitCommand(), new ShoutCommand(), new OpenCommand(), 
             new UnlockCommand(), new InspectCommand(), new InsertCommand(), 
             new PickupCommand(), new InvestigateCommand(), new BackCommand(), 
-            new InventoryCommand() };
+            new InventoryCommand(), new ProfilesCommand(), new TalkCommand() };
 
         public CommandWords() : this(_commandArray) {}
 

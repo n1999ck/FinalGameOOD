@@ -83,11 +83,13 @@ namespace StarterGame
             door = Door.Connect(breakRoom, lobby, "west", "east");
             door = Door.Connect(breakRoom, office, "north","south");
             
-            NPCharacter sophieBalmer = new NPCharacter(office, "Sophie Balmer", "26", "Amelia's niece. A shy, reserved individual and embalmer-in-training.");
-            NPCharacter angelHart = new NPCharacter(breakRoom, "Angel Hart", "37", "An ex-artist who changed careers and became an embalmer. Loves the macabre and usually wears gothic attire.");
-            NPCharacter detectiveSholmes = new NPCharacter(frontEmbalmingRoom, "Detective Sholmes", "39", "A detective in my department. Has a taste for the flamboyant and dramatic.");
-            NPCharacter mayaFey = new NPCharacter(parkingLot, "Maya Fey", "20", "My assistant. A spiritual person who doesn't take things too seriously.");
-
+            NPCharacter sophieBalmer = new NPCharacter(office, "Sophie", "26", "Sophie Balmer. Amelia's niece. A shy, reserved individual and embalmer-in-training.");
+            NPCharacter angelHart = new NPCharacter(breakRoom, "Angel", "37", "Angel Hart. An ex-artist who changed careers and became an embalmer. Loves the macabre and usually wears gothic attire.");
+            angelHart.setTalkResponse("default", "Hey, I'm Angel.");
+            NPCharacter detectiveSholmes = new NPCharacter(frontEmbalmingRoom, "Sholmes", "39", "Detective Sholmes. A detective in my department. Has a taste for the flamboyant and dramatic.");
+            NPCharacter mayaFey = new NPCharacter(parkingLot, "Maya", "20", "Maya Fey. My assistant. A spiritual person who doesn't take things too seriously.");
+            mayaFey.setTalkResponse("default", "Hey");
+            
             sophieBalmer.ChangeState("angry");
             angelHart.ChangeState("sad");
 
@@ -122,6 +124,7 @@ namespace StarterGame
             parkingLot.AddPointofInterest(sophiesCar);
             item = new Item("Photo", 0.1f, "A family photo from a holiday party. The setting seems to be a high-income home. Amelia and Sophie are visible.");;
             sophiesCar.Drop(item);
+            mayaFey.setPOIResponse(sophiesCar, "Wow, what a cool Prius.");
 
             PointOfInterest ameliasCar = new PointOfInterest("AmeliasCar", "A red 2018 Acura MDX. It looks like it's been to the car wash within the last week or so. The inside is a little cluttered.", parkingLot);
             parkingLot.AddPointofInterest(ameliasCar);

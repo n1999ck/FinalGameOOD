@@ -13,7 +13,17 @@ namespace StarterGame
         
         public void AddCharacter(NPCharacter npc)
         {
-            
+            _profiles[npc.Name] = npc;
+        }
+
+        public string ListCharacters()
+        {
+            string returnString = "";
+            foreach (NPCharacter npc in _profiles.Values)
+            {
+                returnString += npc.ToString();
+            }
+            return returnString;
         }
     }
 }

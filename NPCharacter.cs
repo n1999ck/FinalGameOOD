@@ -46,6 +46,7 @@ namespace StarterGame
             _talkResponses = new Dictionary<string, string>();
             _desiredItems = new Dictionary<string, IItem>();
             _state = new NeutralState(this);
+            room.AddCharacter(this);
         }
         public void setDesiredItem(string state, IItem item)
         {
@@ -79,6 +80,11 @@ namespace StarterGame
         public void setPOIResponse(PointOfInterest POI, string response)
         {
             _talkResponses.Add(POI.Name, response);
+        }
+
+        public void setTalkResponse(string topic, string response)
+        {
+            _talkResponses.Add(topic, response);
         }
         public void Give(IItem item)
         {
@@ -185,9 +191,9 @@ namespace StarterGame
         override
         public void TalkAbout(string topic)
         {
-            string response = _character.DefaultResponse;
+            string response = "";
             _character.TalkResponses.TryGetValue(topic, out response);
-            _character.NormalMessage(response);
+            _character.NormalMessage(_character.Name + ": " + response);
         }
 
         override
@@ -226,14 +232,14 @@ namespace StarterGame
         override
         public void LookAt(IItem item)
         {
-            _character.NormalMessage("I don't care about that " + item.Name + "!");
+            _character.NormalMessage(_character.Name + ": I don't care about that " + item.Name + "!");
         }
 
 
         override
         public void TalkAbout(string topic)
         {
-            _character.NormalMessage("I don't want to talk about " + topic + "!");
+            _character.NormalMessage(_character.Name + ": I don't want to talk about " + topic + "!");
         }
     }
 
@@ -266,14 +272,14 @@ namespace StarterGame
         override
         public void LookAt(IItem item)
         {
-            _character.NormalMessage("I just can't think of " + item.Name + "right now...");
+            _character.NormalMessage(_character.Name + ": I just can't think of " + item.Name + "right now...");
         }
 
 
         override
         public void TalkAbout(string topic)
         {
-            _character.NormalMessage("I don't want to talk about " + topic + "... It's too sad.");
+            _character.NormalMessage(_character.Name + ": I don't want to talk about " + topic + "... It's too sad.");
         }
     }
 }

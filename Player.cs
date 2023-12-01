@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
+using System.Drawing;
 
 namespace StarterGame
 {
@@ -14,6 +15,10 @@ namespace StarterGame
         private IItemContainer _inventory;
         private float _maximumWeight;
         private Stack<Door> _doorHistory;
+        private CharactersProfile _characters;
+        public CharactersProfile Characters { get { return _characters; } }
+        private List<PointOfInterest> _investigated;
+        public List<PointOfInterest> Investigated{get{return _investigated;}}
 
         public Player(Room room)
         {
@@ -22,6 +27,8 @@ namespace StarterGame
             _inventory = new ItemContainer("Inventory", 0f);
             _maximumWeight = 10f;
             _doorHistory = new Stack<Door>();
+            _characters = new CharactersProfile();
+            _investigated = new List<PointOfInterest>();
         }
 
         public void Give(IItem item)
@@ -41,22 +48,30 @@ namespace StarterGame
         public void WalkTo(string direction)
         {
             Door nextDoor = this.CurrentRoom.GetExit(direction);
-            if (nextDoor.IsOpen)
+            if (nextDoor != null)
             {
-                Notification notification = new Notification("PlayerWillEnterRoom", this);
-                NotificationCenter.Instance.PostNotification(notification);
-                //Remember we don't have direct access to Any Part of the room
-                // Like reaching into someones pants to get their wallet to borrow a dollar
-                _doorHistory.Push(nextDoor);
-                CurrentRoom = nextDoor.RoomOnTheOtherSide(CurrentRoom);
-                notification = new Notification("PlayerDidEnterRoom", this);
-                NotificationCenter.Instance.PostNotification(notification);
-                NormalMessage("\n" + this.CurrentRoom.ToString());
+                if (nextDoor.IsOpen)
+                {
+                    Notification notification = new Notification("PlayerWillEnterRoom", this);
+                    NotificationCenter.Instance.PostNotification(notification);
+                    //Remember we don't have direct access to Any Part of the room
+                    // Like reaching into someones pants to get their wallet to borrow a dollar
+                    _doorHistory.Push(nextDoor);
+                    CurrentRoom = nextDoor.RoomOnTheOtherSide(CurrentRoom);
+                    notification = new Notification("PlayerDidEnterRoom", this);
+                    NotificationCenter.Instance.PostNotification(notification);
+                    NormalMessage("\n" + this.CurrentRoom.ToString());
+                }
+                else
+                {
+                    ErrorMessage("\nThe door in " + direction + " is not open.");
+                }
             }
             else
             {
-                ErrorMessage("\nThe door in " + direction + " is not open.");
+                ErrorMessage("\nThere is no door to the " + direction + ".");   
             }
+            
         }
         public void Back()
         {
@@ -117,6 +132,10 @@ namespace StarterGame
             }
         }
 
+        public void Profiles(){
+            InfoMessage(_characters.ListCharacters());
+        }
+
         public void Unlock(string direction)
         {
             Door door = this.CurrentRoom.GetExit(direction);
@@ -156,19 +175,17 @@ namespace StarterGame
 
         public void Investigate(string pointOfInterestName)
         {
-            Notification notification = new Notification("PlayerWillInvestigate", this);
-            NotificationCenter.Instance.PostNotification(notification);
             PointOfInterest pointOfInterest = CurrentRoom.GetPointOfInterest(pointOfInterestName);
             if (pointOfInterest != null)
             {
                 InfoMessage("You take a closer look at " + pointOfInterestName + ".\nIt seems to be " + pointOfInterest.Description);
                 InfoMessage("Items:\n" + pointOfInterest.ItemsList);
                 pointOfInterest.Investigated = true;
-                notification = new Notification("PlayerDidInvestigate", this);
-                NotificationCenter.Instance.PostNotification(notification);
+                _investigated.Add(pointOfInterest);
             }
             else
             {
+                ErrorMessage("Couldn't find " + pointOfInterestName);
                 InfoMessage(CurrentRoom.Investigate());
             }
         }
@@ -338,10 +355,16 @@ namespace StarterGame
             }
             
         }
-        public void Talk(NPCharacter character, string topic)
+        public void Talk(string characterName, string topic)
         {
-            character.GetNPCState().TalkAbout(topic);
+            NPCharacter character = null;
+            CurrentRoom.Characters.TryGetValue(characterName, out character);
+            if(character != null)
+            {
+                character.GetNPCState().TalkAbout(topic);
+            }
         }
+        
     }
 
 }
