@@ -8,13 +8,12 @@ namespace StarterGame
         private string _name;
         private float _weight;
         private IItem _decorator;
-        private string _longDescription;
+        private string _description;
         private bool _canPickUp;
-
         public string Name {get{return _name;}}
         public float Weight {get{return _weight +  (_decorator == null ? 0 : _decorator.Weight);}}
-        public string Description {get {return LongName + ", " + Weight;}}
-        //public string LongDescription {get {return LongDescription;} set {_longDescription = value;}}
+        public string FullDescription {get {return LongName + ", " + Weight + Description;}}
+        public string Description {get {return Name + ": " + _description;} set {_description = value;}}
         public bool IsContainer {get{return false;}}
         public string LongName {
             get
@@ -23,17 +22,20 @@ namespace StarterGame
             }
         }
         public bool CanPickUp { get { return _canPickUp; } }
-        public Item() : this("Nameless", 0, true){}
-        public Item(string Name) : this(Name, 1f, true){}
-        public Item(string Name, float Weight) : this(Name, 1f, true){}
+        public Item() : this("Nameless", 0, true, ""){}
+        public Item(string Name) : this(Name, 1f, true, ""){}
+        public Item(string Name, float Weight) : this(Name, 1f, true, ""){}
+
+        public Item(string Name, float Weight, string Description) : this(Name, Weight, true, Description){}
 
         //Designated constructor
-        public Item(string Name, float Weight, bool CanPickUp)
+        public Item(string Name, float Weight, bool CanPickUp, string Description)
         {
             _name = Name;
             _weight = Weight;
             _canPickUp = CanPickUp;
             _decorator = null;
+            _description = Description;
         }
 
         //Decorator design pattern: Making variations of objects without changing the original
@@ -50,6 +52,7 @@ namespace StarterGame
                 _decorator.AddDecorator(decorator); //Linked list moment
             }
         }
+        
     }
 
     public class ItemContainer : IItemContainer

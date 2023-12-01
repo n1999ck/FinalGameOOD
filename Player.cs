@@ -146,7 +146,7 @@ namespace StarterGame
         }
         public void Shout(string word)
         {
-            NormalMessage("<<<" + word + ">>>");
+            NormalMessage("You shout \"" + word + "\" out loud.");
             Dictionary<string, Object> userInfo = new Dictionary<string, object>();
             userInfo["word"] = word; 
             Notification notification = new Notification
@@ -220,7 +220,7 @@ namespace StarterGame
                 if(item.CanPickUp && _inventory.Weight + item.Weight <= _maximumWeight)
                 {
                     Give(item);
-                    InfoMessage("You picked up " + _hand.Name);
+                    InfoMessage("You picked up " + item.Name);
                 }
                 else
                 {
@@ -232,6 +232,31 @@ namespace StarterGame
             {
                 WarningMessage("There is no item called " + itemName);
             }
+        }
+        public void Pickup(String PointofInterestName, String itemName)
+        {
+            if (CurrentRoom.GetPointOfInterest(PointofInterestName) != null)
+            {
+                IItem item = CurrentRoom.GetPointOfInterest(PointofInterestName).Pickup(itemName);
+                if (item != null)
+                {
+                    if(item.CanPickUp && _inventory.Weight + item.Weight <= _maximumWeight)
+                    {
+                        Give(item);
+                        InfoMessage("You picked up " + item.Name);
+                    }
+                    else
+                    {
+                        WarningMessage("You don't have enough room in your bag.");
+                        CurrentRoom.Drop(item);
+                    }
+                }
+                else
+                {
+                    WarningMessage("There is no item called " + itemName);
+                }
+            }
+            
         }
 
         public void ColoredMessage(string message, ConsoleColor newColor)

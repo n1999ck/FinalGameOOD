@@ -4,11 +4,16 @@ namespace StarterGame
 {
     public class CharactersProfile
     {
-        private Dictionary<string, NPCharacter> _profiles;
+        private Dictionary<string, NPCharacter> _profiles = null;
         
         public CharactersProfile()
         {
-            profiles
+            _profiles = new Dictionary<string, NPCharacter>();
+        }
+        
+        public void AddCharacter(NPCharacter npc)
+        {
+            
         }
     }
 }

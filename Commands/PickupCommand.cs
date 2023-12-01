@@ -15,6 +15,10 @@ namespace StarterGame
             {
                 player.Pickup(this.SecondWord);
             }
+            else if(this.HasThirdWord())
+            {
+                player.Pickup(this.SecondWord, this.ThirdWord);
+            }
             else
             {
                 player.WarningMessage("\nPick up what?");

@@ -51,13 +51,15 @@ namespace StarterGame
             }
             }
         
-        public Room() : this("No Tag"){}
+        public Room() : this("No Tag", ""){}
+        public Room(string tag) : this(tag, ""){}
 
         // Designated Constructor
-        public Room(string tag)
+        public Room(string tag, string description)
         {
             _exits = new Dictionary<string, Door>();
             this.Tag = tag;
+            this.Description = description;
             this._roomDelegate = null; // if you want a delegate you must set
             this._items = new ItemContainer("Floor", 0f);
             this._pointsOfInterest = new Dictionary<string, PointOfInterest>();
@@ -112,13 +114,25 @@ namespace StarterGame
         }
         
         public IItem Pickup(String itemName)
-        {
+        { 
+            IItem returnItem = _items.GetItem(itemName);
+            if (returnItem != null)
+            {
+                return returnItem;
+            }
+            else
+            {
+                foreach(PointOfInterest pointOfInterest in _pointsOfInterest.Values)
+                {
+                    returnItem =pointOfInterest.Pickup(itemName);
+                }
+            }
             return _items.GetItem(itemName);
         }
 
-        public void AddPointofInterest(string name, PointOfInterest pointOfInterest)
+        public void AddPointofInterest(PointOfInterest pointOfInterest)
         {
-            _pointsOfInterest[name] = pointOfInterest;
+            _pointsOfInterest[pointOfInterest.Name] = pointOfInterest;
         }
 
         public PointOfInterest GetPointOfInterest(string name){

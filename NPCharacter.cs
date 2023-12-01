@@ -24,6 +24,9 @@ namespace StarterGame
         //I guess we can have pointers to items here?
         private Dictionary<string, string> _itemResponses = null;
         public Dictionary<string, string> ItemResponses{ get { return _itemResponses; }}
+        private Dictionary<string, IItem> _desiredItems = null;
+        public Dictionary<string, IItem> DesiredItems{ get { return _desiredItems; }}
+
         
         //Might as well have some default here
         private string _defaultResponse = "I don't know anything about that.";
@@ -41,6 +44,12 @@ namespace StarterGame
             _description = description;
             _itemResponses = new Dictionary<string, string>();
             _talkResponses = new Dictionary<string, string>();
+            _desiredItems = new Dictionary<string, IItem>();
+            _state = new NeutralState(this);
+        }
+        public void setDesiredItem(string state, IItem item)
+        {
+            _desiredItems[state] = item;
         }
         public void WalkTo(string direction)
         {
@@ -71,8 +80,6 @@ namespace StarterGame
         {
             _talkResponses.Add(POI.Name, response);
         }
-
-        
         public void Give(IItem item)
         {
             if(item != null)
@@ -80,12 +87,10 @@ namespace StarterGame
                 _inventory.Add(item);
             }
         }
-
         public IItem Take(string itemName)
         {
             return _inventory.Remove(itemName);
         }
-
 
         public void Drop(string itemName)
         {
@@ -93,9 +98,10 @@ namespace StarterGame
             if (item != null)
             {
                 _currentRoom.Drop(item);
-                //TODO: Decide if a string should be output, implement
+                NormalMessage(Name + " dropped " + itemName + " on the floor.");
             }   
         }
+        
         public void OutputMessage(string message)
         {
             Console.WriteLine(message);
@@ -129,9 +135,20 @@ namespace StarterGame
             ColoredMessage(message, ConsoleColor.Red);
         }
 
-        public void ChangeState(NPCState state)
+        public void ChangeState(string state)
         {
-            _state = state;
+            if (state.Equals("angry"))
+            {
+                _state = new AngryState(this);
+            }
+            else if(state.Equals("sad"))
+            {
+                _state = new SadState(this);
+            }
+            else
+            {
+                _state = new NeutralState(this);
+            }
         }
         public NPCState GetNPCState()
         {
@@ -139,10 +156,11 @@ namespace StarterGame
         }
     }
 
-    public class NPCState
+    public abstract class NPCState
     {
-        virtual public void TalkAbout(string topic){}
-        virtual public void LookAt(IItem item){}
+        public abstract void TalkAbout(string topic);
+        public abstract void LookAt(IItem item);
+        public abstract void GiveItem(IItem item);
     }
 
     class NeutralState : NPCState
@@ -152,8 +170,9 @@ namespace StarterGame
         {
             _character = character;
         }
+
     
-        //Get npcharacter's response for an item
+        override
         public void LookAt(IItem item)
         {
             //Item should have dictionary of npcharacter names and their responses to the item
@@ -163,11 +182,18 @@ namespace StarterGame
             _character.NormalMessage(response);
         }
 
+        override
         public void TalkAbout(string topic)
         {
             string response = _character.DefaultResponse;
             _character.TalkResponses.TryGetValue(topic, out response);
             _character.NormalMessage(response);
+        }
+
+        override
+        public void GiveItem(IItem item)
+        {
+            _character.Give(item);
         }
     }
 
@@ -178,15 +204,76 @@ namespace StarterGame
         {
             _character = character;
         }
+        override
+        public void GiveItem(IItem item)
+        {
+            if (item != null)
+            {
+                if (_character.DesiredItems["angry"] != null)
+                {
+                    _character.Give(item);
+                    _character.ChangeState("");
+                    _character.OutputMessage(_character.Name + " is no longer angry.");
+                }
+                else
+                {
+                    _character.Give(item);
+                    _character.OutputMessage(_character.Name + " still seems angry...");
+                }
+            }
+        }
 
+        override
         public void LookAt(IItem item)
         {
             _character.NormalMessage("I don't care about that " + item.Name + "!");
         }
 
+
+        override
         public void TalkAbout(string topic)
         {
             _character.NormalMessage("I don't want to talk about " + topic + "!");
+        }
+    }
+
+        class SadState : NPCState
+        {
+        private NPCharacter _character;
+        public SadState(NPCharacter character)
+        {
+            _character = character;
+        }
+        override
+        public void GiveItem(IItem item)
+        {
+            if (item != null)
+            {
+                if (_character.DesiredItems["sad"] != null)
+                {
+                    _character.Give(item);
+                    _character.ChangeState("");
+                    _character.OutputMessage(_character.Name + " is no longer sad.");
+                }
+                else
+                {
+                    _character.Give(item);
+                    _character.OutputMessage(_character.Name + " still seems sad...");
+                }
+            }
+        }
+
+        override
+        public void LookAt(IItem item)
+        {
+            _character.NormalMessage("I just can't think of " + item.Name + "right now...");
+        }
+
+
+        override
+        public void TalkAbout(string topic)
+        {
+            _character.NormalMessage("I don't want to talk about " + topic + "... It's too sad.");
         }
     }
 }
